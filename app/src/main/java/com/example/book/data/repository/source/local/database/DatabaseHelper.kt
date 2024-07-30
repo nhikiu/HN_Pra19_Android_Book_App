@@ -8,7 +8,6 @@ import com.example.book.data.model.Book
 
 class DatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-
     companion object {
         private const val DATABASE_NAME = "favorites.db"
         private const val DATABASE_VERSION = 1
@@ -22,30 +21,37 @@ class DatabaseHelper(context: Context) :
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTable = ("CREATE TABLE $TABLE_NAME ("
-                + "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "$COLUMN_TITLE TEXT,"
-                + "$COLUMN_AUTHOR TEXT,"
-                + "$COLUMN_DESCRIPTION TEXT,"
-                + "$COLUMN_IMAGE TEXT,"
-                + "$COLUMN_RATING REAL)")
+        val createTable = (
+            "CREATE TABLE $TABLE_NAME (" +
+                "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$COLUMN_TITLE TEXT," +
+                "$COLUMN_AUTHOR TEXT," +
+                "$COLUMN_DESCRIPTION TEXT," +
+                "$COLUMN_IMAGE TEXT," +
+                "$COLUMN_RATING REAL)"
+        )
         db.execSQL(createTable)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+    override fun onUpgrade(
+        db: SQLiteDatabase,
+        oldVersion: Int,
+        newVersion: Int,
+    ) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
 
     fun addFavorite(book: Book) {
         val db = this.writableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_TITLE, book.title)
-            put(COLUMN_AUTHOR, book.author)
-            put(COLUMN_DESCRIPTION, book.description)
-            put(COLUMN_IMAGE, book.image)
-            put(COLUMN_RATING, book.rating)
-        }
+        val values =
+            ContentValues().apply {
+                put(COLUMN_TITLE, book.title)
+                put(COLUMN_AUTHOR, book.author)
+                put(COLUMN_DESCRIPTION, book.description)
+                put(COLUMN_IMAGE, book.image)
+                put(COLUMN_RATING, book.rating)
+            }
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
@@ -62,14 +68,15 @@ class DatabaseHelper(context: Context) :
         val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         if (cursor.moveToFirst()) {
             do {
-                val book = Book(
-                    id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),
-                    title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)),
-                    author = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR)),
-                    description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)),
-                    image = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE)),
-                    rating = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_RATING))
-                )
+                val book =
+                    Book(
+                        id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                        title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)),
+                        author = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR)),
+                        description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)),
+                        image = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE)),
+                        rating = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_RATING)),
+                    )
                 favoritesList.add(book)
             } while (cursor.moveToNext())
         }
