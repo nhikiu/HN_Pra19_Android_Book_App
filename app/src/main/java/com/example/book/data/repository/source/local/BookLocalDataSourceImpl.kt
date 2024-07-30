@@ -3,10 +3,16 @@ package com.example.book.data.repository.source.local
 import com.example.book.data.model.Book
 import com.example.book.data.repository.OnResultListener
 import com.example.book.data.repository.source.BookDataSource
+import com.example.book.data.repository.source.local.database.DatabaseHelper
 
-class BookLocalDataSourceImpl : BookDataSource.Local {
+class BookLocalDataSourceImpl(private val dbHelper: DatabaseHelper) : BookDataSource.Local {
     override fun getFavorites(listener: OnResultListener<List<Book>>) {
-        TODO("Not yet implemented")
+        val books = dbHelper.getAllFavorites()
+        if (books.isNotEmpty()) {
+            listener.onSuccess(books)
+        } else {
+            listener.onError()
+        }
     }
 
     override fun addToFavorites(listener: OnResultListener<Book>) {
