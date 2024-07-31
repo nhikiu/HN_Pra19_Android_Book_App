@@ -82,11 +82,17 @@ class BookRepository(
         local.getFavorites(listener)
     }
 
-    override fun addToFavorites(book: Book, listener: OnResultListener<Book>) {
+    override fun addToFavorites(
+        book: Book,
+        listener: OnResultListener<Book>,
+    ) {
         local.addToFavorites(book, listener)
     }
 
-    override fun deleteFromFavorites(id: Long, listener: OnResultListener<String>) {
+    override fun deleteFromFavorites(
+        id: Long,
+        listener: OnResultListener<String>,
+    ) {
         local.deleteFromFavorites(id, listener)
     }
 

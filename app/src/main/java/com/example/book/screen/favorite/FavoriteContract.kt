@@ -6,7 +6,9 @@ import com.example.book.utils.base.BasePresenter
 interface FavoriteContract {
     interface Presenter : BasePresenter<View> {
         fun loadFavoriteBooks()
+
         fun addFavoriteBook(book: Book)
+
         fun deleteFavoriteBook(id: Long)
     }
 

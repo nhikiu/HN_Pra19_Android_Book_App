@@ -12,7 +12,10 @@ class BookLocalDataSourceImpl(private val dbHelper: DatabaseHelper) : BookDataSo
         listener.onSuccess(books)
     }
 
-    override fun addToFavorites(book: Book, listener: OnResultListener<Book>) {
+    override fun addToFavorites(
+        book: Book,
+        listener: OnResultListener<Book>,
+    ) {
         try {
             dbHelper.addFavorite(book)
             listener.onSuccess(book)
@@ -21,7 +24,10 @@ class BookLocalDataSourceImpl(private val dbHelper: DatabaseHelper) : BookDataSo
         }
     }
 
-    override fun deleteFromFavorites(id: Long, listener: OnResultListener<String>) {
+    override fun deleteFromFavorites(
+        id: Long,
+        listener: OnResultListener<String>,
+    ) {
         try {
             dbHelper.deleteFavorite(id)
             listener.onSuccess("Deleted successfully")

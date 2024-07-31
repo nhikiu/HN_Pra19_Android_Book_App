@@ -107,5 +107,6 @@ class BookDiffUtil : DiffUtil.ItemCallback<Book>() {
 
 interface OnClickFavoriteBook {
     fun onClickUnMarkdown(book: Book)
+
     fun onClickToDetailBook(book: Book)
 }

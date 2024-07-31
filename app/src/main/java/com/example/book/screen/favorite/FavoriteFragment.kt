@@ -17,8 +17,8 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), FavoriteContra
         FavoritePresenter(
             BookRepository.getInstance(
                 BookRemoteDataSourceImpl.getInstance(),
-                BookLocalDataSourceImpl.getInstance(requireContext())
-            )
+                BookLocalDataSourceImpl.getInstance(requireContext()),
+            ),
         )
     }
     private val mBookAdapter: FavoriteAdapter by lazy { FavoriteAdapter() }
@@ -31,15 +31,17 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), FavoriteContra
         viewBinding.rvFavoriteBook.adapter = mBookAdapter
         presenter.setView(this)
 
-        mBookAdapter.setOnClick(object : OnClickFavoriteBook {
-            override fun onClickUnMarkdown(book: Book) {
-                presenter.deleteFavoriteBook(book.id)
-            }
+        mBookAdapter.setOnClick(
+            object : OnClickFavoriteBook {
+                override fun onClickUnMarkdown(book: Book) {
+                    presenter.deleteFavoriteBook(book.id)
+                }
 
-            override fun onClickToDetailBook(book: Book) {
-                // to do
-            }
-        })
+                override fun onClickToDetailBook(book: Book) {
+                    // to do
+                }
+            },
+        )
     }
 
     override fun initData() {
@@ -70,7 +72,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), FavoriteContra
         Toast.makeText(
             requireContext(),
             exception?.message ?: "An error occurred",
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_SHORT,
         ).show()
     }
 
