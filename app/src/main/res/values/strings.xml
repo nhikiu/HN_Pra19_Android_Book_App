@@ -2,4 +2,5 @@
     <string name="app_name" translatable="false">Android-template</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="my_books">My Books</string>
+    <string name="no_favorite_book_is_found">No favorite book is found</string>
 </resources>
